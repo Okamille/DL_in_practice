@@ -18,9 +18,10 @@ class Rossler:
         # just the y cordinate is necessary.
         y = [initial_condition]
         X = torch.FloatTensor(initial_condition)
-        for t in range(int(self.nb_steps)):
-            X = self.rosler_nn(X)
-            y.append(X.detach().numpy())
+        with torch.no_grad():
+            for t in range(int(self.nb_steps)):
+                X = self.rosler_nn(X)
+                y.append(X.detach().numpy())
         return np.array(y)
 
     def plot_traj(self, y):
